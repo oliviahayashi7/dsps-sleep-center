@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSPS Sleep Resource Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --night: #0d1117;
+    --deep: #161b27;
+    --card: #1e2535;
+    --card-hover: #252d42;
+    --border: rgba(148,163,220,0.12);
+    --moon: #b3c5ff;
+    --star: #8a9fd4;
+    --dawn: #f0c87a;
+    --dusk: #c084fc;
+    --teal: #5eead4;
+    --coral: #fb923c;
+    --text: #f0f4ff;
+    --muted: #b0bfe8;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--night);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  /* Stars background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(179,197,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(179,197,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 8%, rgba(179,197,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 25%, rgba(179,197,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 12%, rgba(179,197,255,0.6) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 88% 35%, rgba(179,197,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 60%, rgba(179,197,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 55%, rgba(179,197,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 70%, rgba(179,197,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 33% 80%, rgba(179,197,255,0.4) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(13,17,23,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 2rem;
+  }
+  .nav-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--moon);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .moon-icon {
+    width: 22px;
+    height: 22px;
+    background: var(--dawn);
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .moon-icon::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 18px;
+    height: 18px;
+    background: var(--night);
+    border-radius: 50%;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--moon); }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    z-index: 1;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(179,197,255,0.1);
+    border: 1px solid rgba(179,197,255,0.2);
+    color: var(--moon);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 3.25rem;
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--dawn);
+  }
+  .hero p {
+    font-size: 1.0625rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    max-width: 480px;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--moon);
+    color: var(--night);
+    padding: 12px 24px;
+    border-radius: 100px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: #ccd8ff; }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    padding: 12px 24px;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--text); }
+  .hero-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+  /* Clock visual */
+  .clock-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .clock-ring {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    position: relative;
+    background: var(--deep);
+  }
+  .clock-label {
+    position: absolute;
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-family: var(--sans);
+  }
+  .clock-label.t12 { top: 8px; left: 50%; transform: translateX(-50%); }
+  .clock-label.t3  { right: 12px; top: 50%; transform: translateY(-50%); }
+  .clock-label.t6  { bottom: 8px; left: 50%; transform: translateX(-50%); }
+  .clock-label.t9  { left: 12px; top: 50%; transform: translateY(-50%); }
+  .normal-arc, .dsps-arc {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    transform-origin: bottom left;
+  }
+  .clock-legend {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .legend-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* Sections */
+  section {
+    position: relative;
+    z-index: 1;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dawn);
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+  }
+  h2 {
+    font-family: var(--serif);
+    font-size: 2.25rem;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+  h3 {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* What is DSPS */
+  .what-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+  .what-text p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .stat-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem;
+  }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.25rem;
+    font-weight: 300;
+    color: var(--dawn);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .stat-desc {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  /* Symptoms */
+  .symptoms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+  .symptom-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .symptom-card:hover {
+    background: var(--card-hover);
+    border-color: rgba(148,163,220,0.25);
+  }
+  .symptom-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+  }
+  .icon-moon { background: rgba(179,197,255,0.12); }
+  .icon-sun  { background: rgba(240,200,122,0.12); }
+  .icon-brain{ background: rgba(192,132,252,0.12); }
+  .symptom-card p { font-size: 0.875rem; color: var(--muted); margin-top: 0.375rem; }
+
+  /* Causes */
+  .causes-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .cause-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .cause-num {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 300;
+    color: rgba(179,197,255,0.2);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2rem;
+  }
+  .cause-item p { font-size: 0.875rem; color: var(--muted); margin-top: 0.25rem; }
+
+  /* Treatments */
+  .treatment-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin: 2rem 0 1.5rem;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 18px;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-family: var(--sans);
+    transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: rgba(179,197,255,0.1);
+    border-color: rgba(179,197,255,0.3);
+    color: var(--moon);
+  }
+  .treatment-content { display: none; }
+  .treatment-content.active { display: block; }
+  .treatment-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .treatment-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .t-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+  .treatment-item h4 {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+  .treatment-item p { font-size: 0.8125rem; color: var(--muted); }
+
+  /* Sleep diary */
+  .diary-section {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-top: 2.5rem;
+  }
+  .diary-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .day-col { text-align: center; }
+  .day-name {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+  }
+  .time-block {
+    height: 8px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+  }
+  .sleep-block { background: rgba(94,234,212,0.4); }
+  .wake-block  { background: rgba(179,197,255,0.08); }
+  .diary-note {
+    margin-top: 1rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* Tips */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+  .tip-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+  }
+  .tip-card.featured {
+    grid-column: span 2;
+    background: rgba(179,197,255,0.06);
+    border-color: rgba(179,197,255,0.18);
+  }
+  .tip-badge {
+    display: inline-block;
+    background: rgba(94,234,212,0.12);
+    color: var(--teal);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 0.75rem;
+  }
+  .tip-card p { font-size: 0.875rem; color: var(--muted); margin-top: 0.375rem; }
+
+  /* FAQ */
+  .faq-list { margin-top: 2rem; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 0;
+  }
+  .faq-q {
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    user-select: none;
+  }
+  .faq-q::after {
+    content: '+';
+    font-size: 1.25rem;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .faq-item.open .faq-q::after {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    font-size: 0.9rem;
+    color: var(--muted);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s;
+  }
+  .faq-item.open .faq-a {
+    max-height: 300px;
+    padding-top: 0.75rem;
+  }
+
+  /* Support */
+  .support-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+  .support-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .support-icon {
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  .support-card h3 { font-size: 1rem; text-align: center; }
+  .support-card p { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; text-align: center; }
+  .support-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--moon);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(179,197,255,0.3);
+    padding-bottom: 1px;
+  }
+
+  /* Footer */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+  footer p {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 0.5rem;
+  }
+  .footer-disclaimer {
+    font-size: 0.75rem;
+    color: rgba(138,159,212,0.5);
+  }
+
+  /* Shared inline box styles */
+  .box {
+    border-radius: 14px;
+    padding: 1.1rem 1.4rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+  .box-card  { background: var(--card); border: 1px solid var(--border); }
+  .box-teal  { background: rgba(94,234,212,0.06);  border: 1px solid rgba(94,234,212,0.18);  color: var(--muted); }
+  .box-moon  { background: rgba(179,197,255,0.05); border: 1px solid rgba(179,197,255,0.18); color: var(--muted); }
+  .box-story { background: var(--card); border: 1px solid var(--border); }
+  .box-teal  strong { color: var(--teal); }
+  .box-moon  strong { color: var(--moon); }
+  .two-col-overflow { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 1.5rem; margin-top: 1.5rem; }
+
+  /* Responsive */
+  @media (max-width: 720px) {
+    .hero { grid-template-columns: 1fr; }
+    .clock-visual { display: none; }
+    .what-grid, .symptoms-grid, .causes-list, .treatment-list,
+    .tips-grid, .support-grid { grid-template-columns: 1fr; }
+    .tip-card.featured { grid-column: span 1; }
+    .diary-grid { grid-template-columns: repeat(4, 1fr); }
+    h2 { font-size: 1.75rem; }
+    .hero h1 { font-size: 2.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <span class="moon-icon"></span>
+      DSPS Sleep Center
+    </a>
+    <ul class="nav-links">
+      <li><a href="#what">About</a></li>
+      <li><a href="#symptoms">Symptoms</a></li>
+      <li><a href="#treatment">Treatment</a></li>
+      <li><a href="#tips">Daily Tips</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#support">Support</a></li>
+      <li><a href="dsps-treatment-guide.html" style="color:var(--teal);border:1px solid rgba(94,234,212,0.3);padding:4px 12px;border-radius:100px;font-size:0.8rem;white-space:nowrap;">Treatment Guide →</a></li>
+      <li><a href="dsps-testimonials.html" style="color:var(--dusk);border:1px solid rgba(192,132,252,0.3);padding:4px 12px;border-radius:100px;font-size:0.8rem;white-space:nowrap;">Patient Stories →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div>
+    <span class="hero-tag">Sleep Health Guide</span>
+    <h1>Your body clock runs on a <em>different time</em></h1>
+    <p>DSPS (Delayed Sleep Phase Syndrome) is a real sleep problem — not a choice, not laziness. Learn what it is, how it affects you, and what you can do to help.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#what">Learn more →</a>
+      <a class="btn-ghost" href="#treatment">Treatment options</a>
+    </div>
+  </div>
+  <div class="clock-visual">
+    <svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="110" cy="110" r="104" fill="#161b27" stroke="rgba(148,163,220,0.15)" stroke-width="1.5"/>
+      <!-- tick marks -->
+      <g stroke="rgba(148,163,220,0.2)" stroke-width="1">
+        <line x1="110" y1="10" x2="110" y2="22"/>
+        <line x1="110" y1="198" x2="110" y2="210"/>
+        <line x1="10" y1="110" x2="22" y2="110"/>
+        <line x1="198" y1="110" x2="210" y2="110"/>
+      </g>
+      <!-- Hour labels -->
+      <text x="110" y="34" text-anchor="middle" fill="rgba(138,159,212,0.5)" font-size="11" font-family="DM Sans, sans-serif">12</text>
+      <text x="188" y="114" text-anchor="middle" fill="rgba(138,159,212,0.5)" font-size="11" font-family="DM Sans, sans-serif">3</text>
+      <text x="110" y="200" text-anchor="middle" fill="rgba(138,159,212,0.5)" font-size="11" font-family="DM Sans, sans-serif">6</text>
+      <text x="32" y="114" text-anchor="middle" fill="rgba(138,159,212,0.5)" font-size="11" font-family="DM Sans, sans-serif">9</text>
+
+      <!-- Normal sleep arc: ~10pm–6am (300°–180°) -->
+      <path d="M 57 57 A 75 75 0 0 1 162 162" fill="none" stroke="rgba(94,234,212,0.35)" stroke-width="14" stroke-linecap="round"/>
+      <!-- DSPS sleep arc: ~2am–10am shifted -->
+      <path d="M 162 57 A 75 75 0 0 1 57 162" fill="none" stroke="rgba(251,146,60,0.4)" stroke-width="14" stroke-linecap="round"/>
+
+      <!-- Center dot -->
+      <circle cx="110" cy="110" r="4" fill="rgba(179,197,255,0.4)"/>
+
+      <!-- Legend labels -->
+      <rect x="20" y="170" width="10" height="4" rx="2" fill="rgba(94,234,212,0.5)"/>
+      <text x="35" y="174" fill="rgba(138,159,212,0.7)" font-size="10" font-family="DM Sans, sans-serif">Typical sleep</text>
+      <rect x="120" y="170" width="10" height="4" rx="2" fill="rgba(251,146,60,0.5)"/>
+      <text x="135" y="174" fill="rgba(138,159,212,0.7)" font-size="10" font-family="DM Sans, sans-serif">DSPS sleep</text>
+    </svg>
+    <p style="font-size:0.8rem; color: var(--muted); text-align:center; max-width:200px;">With DSPS, your sleep time is pushed much later than most people's.</p>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- What is DSPS -->
+<section id="what">
+  <p class="section-label">What is this condition?</p>
+  <h2>What is DSPS?</h2>
+  <div class="what-grid">
+    <div class="what-text">
+      <p>DSPS stands for <strong style="color:var(--text)">Delayed Sleep Phase Syndrome</strong>. It is a <strong style="color:var(--text)">circadian rhythm disorder</strong> — meaning the body's natural 24-hour sleep-wake cycle (called the circadian rhythm) is shifted much later than normal. Most adults fall asleep around 10–11 pm and wake up around 6–7 am. With DSPS, the body wants to sleep and wake hours later than that.</p>
+      <p>In serious cases, people with DSPS can't fall asleep until 3–6 am and may not wake up until the afternoon. This is not because they are lazy or choosing to stay up — their internal clock is just set to a different time.</p>
+      <p><strong style="color:var(--text)">DSPS is not insomnia</strong> (a condition where you struggle to sleep at all). People with DSPS can sleep just fine — but only at the wrong time for school or work. When they sleep on their own schedule, they feel great. The good news: DSPS can be helped with some simple, steady changes.</p>
+    </div>
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-num">0.2%</div>
+        <div class="stat-desc">of all people have DSPS — it's more common in teens</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">7–10%</div>
+        <div class="stat-desc">of people seen at sleep clinics are told they have DSPS</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2–6h</div>
+        <div class="stat-desc">later than normal is how far the sleep time is usually shifted</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">Lifelong</div>
+        <div class="stat-desc">condition — but very manageable with the right plan</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What does it feel like -->
+  <div style="margin-top:3rem;">
+    <p class="section-label">What it feels like</p>
+    <h2>A real story about DSPS</h2>
+    <div class="box box-story" style="margin-top:1.5rem;">
+      <p style="color:var(--muted);font-style:italic;line-height:1.8;">Alex is 16 years old. His parents make him go to bed at 11 PM, but he can't fall asleep until about 2 or 3 in the morning. Getting up at 6:30 AM for school feels almost impossible. Mornings wipe him out, and he sometimes falls asleep in class. On weekends, Alex sleeps from 3 AM until the afternoon — and feels much better. Lying in bed awake every night makes him frustrated, which makes sleeping even harder. Many people think Alex is just being lazy, but DSPS is a real condition. Trying harder does not fix it.</p>
+    </div>
+
+    <div class="two-col-overflow">
+      <div class="box box-card">
+        <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dawn);margin-bottom:1rem;">People with DSPS often say:</p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem;">
+          <li style="font-size:0.9rem;color:var(--muted);padding-left:1rem;border-left:2px solid rgba(179,197,255,0.2);">"I can't fall asleep no matter how hard I try"</li>
+          <li style="font-size:0.9rem;color:var(--muted);padding-left:1rem;border-left:2px solid rgba(179,197,255,0.2);">"Getting up in the morning is really hard"</li>
+          <li style="font-size:0.9rem;color:var(--muted);padding-left:1rem;border-left:2px solid rgba(179,197,255,0.2);">"I think best and feel sharpest late at night"</li>
+          <li style="font-size:0.9rem;color:var(--muted);padding-left:1rem;border-left:2px solid rgba(179,197,255,0.2);">"Weekends are fine — school days are awful"</li>
+        </ul>
+      </div>
+      <div class="box box-card">
+        <p style="font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dawn);margin-bottom:1rem;">People with DSPS often go through:</p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem;">
+          <li style="font-size:0.9rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;"><span style="width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;"></span>Worry and stress around bedtime</li>
+          <li style="font-size:0.9rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;"><span style="width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;"></span>Not enough sleep on school or work days</li>
+          <li style="font-size:0.9rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;"><span style="width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;"></span>Feeling blamed or misunderstood by others</li>
+          <li style="font-size:0.9rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem;"><span style="width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;"></span>Trouble keeping up at school or work</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Symptoms -->
+<section id="symptoms">
+  <p class="section-label">Signs to look for</p>
+  <h2>Common signs of DSPS</h2>
+  <p style="color: var(--muted); max-width:600px;">DSPS affects more than just when you sleep. Knowing these signs is the first step to getting the right help.</p>
+  <div class="symptoms-grid">
+    <div class="symptom-card">
+      <div class="symptom-icon icon-moon">🌙</div>
+      <h3>Can't fall asleep early</h3>
+      <p>You lie in bed for hours feeling wide awake, even when you're tired. Your <strong style="color:var(--text)">sleep onset</strong> (the time it takes to fall asleep) is pushed very late — often past midnight or into early morning.</p>
+    </div>
+    <div class="symptom-card">
+      <div class="symptom-icon icon-sun">☀️</div>
+      <h3>Very hard to wake up</h3>
+      <p>Alarms don't work well. Waking up early feels almost impossible. Doctors call this <strong style="color:var(--text)">sleep inertia</strong> — a strong, foggy feeling right after waking that's much worse than normal morning grogginess.</p>
+    </div>
+    <div class="symptom-card">
+      <div class="symptom-icon icon-brain">🧠</div>
+      <h3>Sleepy during the day</h3>
+      <p>You feel tired and foggy in the morning when others feel fine. This is called <strong style="color:var(--text)">excessive daytime sleepiness</strong> — it's not just being tired, it's a medical symptom caused by your clock being out of sync.</p>
+    </div>
+    <div class="symptom-card">
+      <div class="symptom-icon icon-moon">🌙</div>
+      <h3>Most awake late at night</h3>
+      <p>You feel your best after midnight — alert, focused, and full of energy. This is called being a <strong style="color:var(--text)">late chronotype</strong>, meaning your natural sleep-wake preference runs much later than average.</p>
+    </div>
+    <div class="symptom-card">
+      <div class="symptom-icon icon-sun">☀️</div>
+      <h3>Sleep fine on your own schedule</h3>
+      <p>On weekends or breaks when no one wakes you up, you sleep well and feel rested. This tells doctors the problem is <strong style="color:var(--text)">timing</strong>, not sleep quality — a key sign of DSPS vs. other sleep disorders.</p>
+    </div>
+    <div class="symptom-card">
+      <div class="symptom-icon icon-brain">🧠</div>
+      <h3>Mood and health problems</h3>
+      <p>Feeling sad or worried is common after long periods of poor sleep. Doctors call this <strong style="color:var(--text)">sleep deprivation</strong> (not getting enough sleep), which over time can lead to <strong style="color:var(--text)">depression</strong> and <strong style="color:var(--text)">anxiety</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Causes -->
+<section id="causes">
+  <p class="section-label">Why it happens</p>
+  <h2>What causes DSPS?</h2>
+  <div class="causes-list">
+    <div class="cause-item">
+      <div class="cause-num">01</div>
+      <div>
+        <h3>Genetics</h3>
+        <p>DSPS is often <strong style="color:var(--text)">hereditary</strong> — meaning it's passed down through families in your genes. Specific <strong style="color:var(--text)">clock genes</strong> (like CRY1 and PER3) that control your body's timing have been found to work differently in people with DSPS. About 4 out of 10 people with DSPS have a family member with the same condition.</p>
+      </div>
+    </div>
+    <div class="cause-item">
+      <div class="cause-num">02</div>
+      <div>
+        <h3>Circadian biology</h3>
+        <p>Your brain has a tiny area called the <strong style="color:var(--text)">suprachiasmatic nucleus (SCN)</strong> — think of it as the master clock that controls your sleep schedule. In people with DSPS, the SCN runs late. This affects when your body releases <strong style="color:var(--text)">melatonin</strong> (the hormone that signals sleep) and when your core body temperature rises to wake you up.</p>
+      </div>
+    </div>
+    <div class="cause-item">
+      <div class="cause-num">03</div>
+      <div>
+        <h3>Adolescence</h3>
+        <p><strong style="color:var(--text)">Puberty</strong> (the period of growing up) naturally shifts the circadian rhythm later in most teens. For people already prone to DSPS, this shift can become permanent. That's why many people first notice the condition in middle or high school — and it's also why doctors see DSPS so often in teenagers.</p>
+      </div>
+    </div>
+    <div class="cause-item">
+      <div class="cause-num">04</div>
+      <div>
+        <h3>Light exposure patterns</h3>
+        <p>Too much <strong style="color:var(--text)">blue light</strong> at night (from screens and bright bulbs) tricks your brain into thinking it's still daytime, which delays melatonin release and pushes sleep even later. This is called <strong style="color:var(--text)">light-induced phase delay</strong>. Getting bright light in the morning does the opposite — it helps reset your clock earlier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Treatment -->
+<section id="treatment">
+  <p class="section-label">How to get better</p>
+  <h2>How can DSPS be treated?</h2>
+  <p style="color: var(--muted); max-width:680px;">DSPS can't be fixed with just one change, but it gets much better over time with steady effort. The two most powerful tools are <strong style="color:var(--text)">light therapy</strong> and <strong style="color:var(--text)">melatonin</strong> — and <em>when</em> you use them matters more than how much.</p>
+
+  <!-- Light & Melatonin explainer -->
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem;margin-top:2rem;">
+    <div class="box box-card" style="margin:0;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+        <span style="font-size:1.25rem;">🌙</span>
+        <h3 style="margin:0;font-size:1.1rem;">Melatonin</h3>
+      </div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem;">
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--teal);flex-shrink:0;">→</span><span><strong style="color:var(--text)">Melatonin</strong> is a hormone (a chemical messenger) your brain makes to signal that it's time to sleep</span></li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--teal);flex-shrink:0;">→</span><span>It rises at night and falls in the morning — this rise is called the <strong style="color:var(--text)">DLMO</strong> (Dim Light Melatonin Onset), which is when your body clock officially "starts" the night</span></li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--teal);flex-shrink:0;">→</span><span>With DSPS, the DLMO happens much later than normal — so you feel sleepy later</span></li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--teal);flex-shrink:0;">→</span><span>Taking a melatonin supplement at the <em>right time</em> acts as a <strong style="color:var(--text)">chronobiotic</strong> — a tool that resets your clock, not just a sleep aid</span></li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--teal);flex-shrink:0;">→</span><span>It only works if you take it 1–2 hours before your target bedtime — timing is everything</span></li>
+      </ul>
+    </div>
+    <div class="box box-card" style="margin:0;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+        <span style="font-size:1.25rem;">☀️</span>
+        <h3 style="margin:0;font-size:1.1rem;">Light therapy</h3>
+      </div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem;">
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--dawn);flex-shrink:0;">→</span><span>Light is the strongest signal that controls your <strong style="color:var(--text)">circadian rhythm</strong> (your body's 24-hour clock)</span></li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--dawn);flex-shrink:0;">→</span><span>In DSPS, the sleep phase is delayed — timed light exposure can correct this</span></li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--dawn);flex-shrink:0;">→</span><span><strong style="color:var(--text)">Bright light in the morning</strong> causes a <strong style="color:var(--text)">phase advance</strong> — it shifts your clock to an earlier time</span></li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--dawn);flex-shrink:0;">→</span><span><strong style="color:var(--text)">Blue-light blocking glasses</strong> at night prevent a <strong style="color:var(--text)">phase delay</strong> — they stop screens from pushing your clock later</span></li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--dawn);flex-shrink:0;">→</span><span>Morning light is free and works even on cloudy days</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box box-teal">
+    <strong>Key point:</strong> <em>When</em> you use melatonin and light matters more than how much you use. Getting the timing right is the most important part of treatment.
+  </div>
+
+  <div class="treatment-tabs" style="margin-top:2.5rem;">
+    <button class="tab-btn active" onclick="showTab('light')">Light therapy</button>
+    <button class="tab-btn" onclick="showTab('melatonin')">Melatonin</button>
+    <button class="tab-btn" onclick="showTab('chronotherapy')">Chronotherapy</button>
+    <button class="tab-btn" onclick="showTab('hygiene')">Sleep hygiene</button>
+    <button class="tab-btn" onclick="showTab('lifestyle')">Lifestyle</button>
+  </div>
+
+  <div id="tab-light" class="treatment-content active">
+    <div class="treatment-list">
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Use a bright light box in the morning</h4><p>Use a 10,000 lux light box for at least 30 minutes right after you wake up. Pick a cool white light for the best effect on your body clock.</p></div></div>
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Go outside after waking</h4><p>You can also go outside for at least 30 minutes each morning. Natural sunlight works even on cloudy days and is free.</p></div></div>
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Do it at the same time every day</h4><p>Light therapy only works if you do it at the same time every morning. Even small changes in timing can make it less effective. Think of it like taking medicine.</p></div></div>
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Block blue light at night</h4><p>Wear blue-light blocking glasses 2–4 hours before your target bedtime. This helps your brain start making melatonin earlier.</p></div></div>
+    </div>
+  </div>
+
+  <div id="tab-melatonin" class="treatment-content">
+    <div class="treatment-list">
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Take it 1–2 hours before your target bedtime</h4><p>This is the most important thing. The goal is to time your melatonin dose close to your natural <strong style="color:var(--text)">DLMO</strong> (Dim Light Melatonin Onset — when your brain first starts releasing melatonin in the evening). Taking it right at bedtime is usually too late to shift your clock.</p></div></div>
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Suggested: Natrol Brand, 1–5 mg</h4><p>Start with a small <strong style="color:var(--text)">dose</strong> (amount) of 1 mg. A bigger dose doesn't always work better and may cause grogginess. Your doctor can help find the right dose and timing for you.</p></div></div>
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>It's a chronobiotic, not a sleeping pill</h4><p>Melatonin is a <strong style="color:var(--text)">chronobiotic</strong> — a substance that resets your body clock. It doesn't knock you out. The goal is to shift <em>when</em> you feel sleepy, not to force sleep right away.</p></div></div>
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Take it every day — don't skip</h4><p>The <strong style="color:var(--text)">chronobiotic effect</strong> (clock-shifting effect) builds slowly over weeks. If you skip days — especially on weekends — you lose your progress and your circadian rhythm drifts back.</p></div></div>
+    </div>
+  </div>
+
+  <div id="tab-chronotherapy" class="treatment-content">
+    <p style="color:var(--muted);margin-bottom:1.5rem;font-size:0.9rem;"><strong style="color:var(--text)">Chronotherapy</strong> (kroh-no-THER-uh-pee) means slowly adjusting your sleep schedule over time — with help from a doctor. The word "chrono" means time. There are two main approaches.</p>
+
+    <!-- Gradual Advance -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+        <span style="background:rgba(94,234,212,0.12);color:var(--teal);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:100px;">Try this first</span>
+        <h3 style="margin:0;font-size:1.1rem;">Gradual phase advance</h3>
+      </div>
+      <p style="font-size:0.875rem;color:var(--muted);margin-bottom:1.25rem;">A <strong style="color:var(--text)">phase advance</strong> means moving your sleep time to an earlier point. This plan does it gradually — a little bit at a time — using light therapy and melatonin, starting close to your current natural sleep time.</p>
+
+      <!-- Timeline visual -->
+      <div style="background:var(--deep);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;overflow-x:auto;">
+        <div style="min-width:420px;">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <span style="font-size:0.75rem;color:var(--muted);width:140px;text-align:right;flex-shrink:0;">Take melatonin 7:30 pm</span>
+            <div style="height:10px;background:rgba(192,132,252,0.5);border-radius:5px;flex:1;"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <span style="font-size:0.75rem;color:var(--muted);width:140px;text-align:right;flex-shrink:0;">Blue-blocking glasses 2–3 hrs before</span>
+            <div style="height:10px;background:rgba(179,197,255,0.3);border-radius:5px;flex:0.85;"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+            <span style="font-size:0.75rem;color:var(--muted);width:140px;text-align:right;flex-shrink:0;">Go to sleep 8:30 pm</span>
+            <div style="height:10px;background:rgba(94,234,212,0.4);border-radius:5px;flex:0.7;"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <span style="font-size:0.75rem;color:var(--dawn);width:140px;text-align:right;flex-shrink:0;">Bright light 6:30–7 am</span>
+            <div style="height:10px;background:rgba(240,200,122,0.4);border-radius:5px;width:24px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem;"><strong style="color:var(--text);">Steps for gradual advance:</strong></p>
+      <ol style="list-style:none;display:flex;flex-direction:column;gap:0.6rem;padding:0;">
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.75rem;"><span style="color:var(--moon);font-weight:500;flex-shrink:0;">1.</span>Find the time you normally fall asleep. Start going to bed <strong style="color:var(--text);">30 minutes earlier</strong> than that.</li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.75rem;"><span style="color:var(--moon);font-weight:500;flex-shrink:0;">2.</span>Take melatonin <strong style="color:var(--text);">1–2 hours before bed</strong>. You can also wear blue-light blocking glasses <strong style="color:var(--text);">3–4 hours before bed</strong>.</li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.75rem;"><span style="color:var(--moon);font-weight:500;flex-shrink:0;">3.</span>Set a wake time. Wake up <strong style="color:var(--text);">7–9 hours after bedtime</strong> based on how much sleep you need.</li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.75rem;"><span style="color:var(--moon);font-weight:500;flex-shrink:0;">4.</span>Get bright light right after waking for <strong style="color:var(--text);">at least 30 minutes</strong>. Use a 10,000 lux lamp or go outside.</li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.75rem;"><span style="color:var(--moon);font-weight:500;flex-shrink:0;">5.</span>Stick to this schedule every night until you can fall asleep within about 20 minutes.</li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.75rem;"><span style="color:var(--moon);font-weight:500;flex-shrink:0;">6.</span>Move bedtime and wake time <strong style="color:var(--text);">30 minutes earlier</strong> again. Repeat Steps 2–5 until you reach your goal bedtime.</li>
+      </ol>
+
+      <div class="box box-moon" style="margin-bottom:0;">
+        <p style="font-size:0.8rem;color:var(--muted);"><strong style="color:var(--moon);">Example — Samantha, age 15:</strong> Samantha can't fall asleep until 2 am and sleeps until noon on weekends. She slowly moves her wake time earlier — from noon to 11:30 am to 11 am — a little bit at a time. She only goes to bed when she feels sleepy, takes melatonin 1–2 hours before bed, and uses a bright light right after waking. Her goal is a school-friendly schedule: in bed by 10:30–11 pm and up by 6:30–7 am.</p>
+      </div>
+      <p style="font-size:0.8rem;color:var(--muted);margin-top:0.75rem;"><strong style="color:var(--text);">Important:</strong> Don't try to move your bedtime too far too fast. If you usually fall asleep at 2 AM, don't jump straight to midnight — you'll just lie there awake. A good goal for teens is around 10:30–11 PM. (Being a bit of a night owl is okay!)</p>
+    </div>
+
+    <!-- Progressive Delay -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+        <span style="background:rgba(251,146,60,0.12);color:var(--coral);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:100px;">Only with your doctor</span>
+        <h3 style="margin:0;font-size:1.1rem;">Progressive phase delay</h3>
+      </div>
+      <p style="font-size:0.875rem;color:var(--muted);">A <strong style="color:var(--text)">phase delay</strong> means moving your sleep time to a later point. With progressive delay, you go to bed later and later each day — shifting your schedule all the way around the clock until you land at your goal bedtime. It works because the <strong style="color:var(--text)">circadian rhythm</strong> moves later much more easily than it moves earlier. This <strong style="color:var(--text)">chronotherapy</strong> option is used when gradual advance hasn't worked. <strong style="color:var(--text);">Only try this with a doctor's help.</strong> After reaching your goal time, a steady schedule and morning light therapy help you maintain it.</p>
+    </div>
+  </div>
+
+  <div id="tab-hygiene" class="treatment-content">
+    <div class="box box-moon" style="margin-bottom:1rem;">
+      <p style="font-size:0.875rem;color:var(--muted);margin-bottom:1.25rem;"><strong style="color:var(--text)">Sleep hygiene</strong> means the daily habits that help you sleep well. Good sleep hygiene is extra important for people with DSPS, because the <strong style="color:var(--text)">circadian rhythm</strong> is already set late and can get pushed even later by things like bright screens at night or an inconsistent schedule. Good habits help move your sleep phase earlier and keep it stable.</p>
+      <div class="treatment-list">
+        <div class="treatment-item"><span class="t-dot"></span><div><h4>Wake up at the same time every day</h4><p>Even on weekends. This is the single most helpful thing you can do. Your wake time is what drives your body clock forward.</p></div></div>
+        <div class="treatment-item"><span class="t-dot"></span><div><h4>Get bright light in the morning</h4><p>This helps move your sleep earlier and makes you feel more awake. Do it every day right after you wake up.</p></div></div>
+        <div class="treatment-item"><span class="t-dot"></span><div><h4>Stay off screens before bed</h4><p>Screens and bright lights at night trick your brain into thinking it's still daytime. This pushes your sleep even later.</p></div></div>
+        <div class="treatment-item"><span class="t-dot"></span><div><h4>Have a calm routine before bed</h4><p>Do quiet and relaxing things in the last hour before bed — no exciting shows, hard workouts, or stressful talk.</p></div></div>
+        <div class="treatment-item"><span class="t-dot"></span><div><h4>Avoid naps and caffeine late in the day</h4><p>Both make it harder to fall asleep at night. If you nap, keep it short (20 minutes) and do it before 3 pm.</p></div></div>
+        <div class="treatment-item"><span class="t-dot"></span><div><h4>Use your bed only for sleep</h4><p>Don't do homework, watch videos, or eat in bed. This helps your brain connect your bed with falling asleep.</p></div></div>
+      </div>
+    </div>
+    <div class="box box-card" style="margin-top:0;">
+      <p style="font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--dawn);margin-bottom:1rem;">More tips for better sleep</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;">
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--teal);flex-shrink:0;">→</span>Don't lie in bed awake for a long time. If you still can't sleep after 20 minutes, get up and do something calm and boring until you feel sleepy again.</li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--teal);flex-shrink:0;">→</span><strong style="color:var(--text);">White noise:</strong> A fan, noise machine, or apps like Spotify or YouTube can block sudden sounds and help you relax.</li>
+        <li style="font-size:0.875rem;color:var(--muted);display:flex;gap:0.5rem;"><span style="color:var(--teal);flex-shrink:0;">→</span><strong style="color:var(--text);">Guided imagery:</strong> Picture a calm place like a beach or forest and focus on what you'd hear and feel there. Apps like Calm or Headspace can walk you through it.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="tab-lifestyle" class="treatment-content">
+    <div class="treatment-list">
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Wake up at the same time every day</h4><p>Even if you didn't sleep much, getting up at the same time helps build up tiredness so you fall asleep earlier the next night.</p></div></div>
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Exercise in the morning or early afternoon</h4><p>Working out earlier in the day can help move your sleep earlier. Try not to exercise hard within 4 hours of your target bedtime.</p></div></div>
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Keep your room cool at night</h4><p>A cool bedroom (around 65–68°F or 18–20°C) helps your body get ready for sleep. A warm bath or shower 1–2 hours before bed also helps.</p></div></div>
+      <div class="treatment-item"><span class="t-dot"></span><div><h4>Ask for a later start time</h4><p>Many schools and jobs will work with you if you have a medical note. A doctor's letter about your DSPS can help you get later start times.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Sleep Diary -->
+<section id="diary">
+  <p class="section-label">Track your sleep</p>
+  <h2>Why keep a sleep diary?</h2>
+  <p style="color: var(--muted); max-width:600px;">A sleep diary — kept for 2 weeks before your doctor visit — is one of the best tools to help with diagnosis. It shows your doctor what your natural sleep pattern really looks like.</p>
+  <div class="diary-section">
+    <p style="font-size:0.85rem; color:var(--muted); margin-bottom:0.25rem;">Example sleep diary — DSPS pattern</p>
+    <div style="display:flex; gap:1.5rem; align-items:center; margin-bottom:1rem; flex-wrap:wrap;">
+      <span style="font-size:0.8rem; color:var(--muted);">Hours shown: 6pm → 6pm (next day)</span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:var(--teal);"><span style="display:inline-block;width:14px;height:6px;background:rgba(94,234,212,0.5);border-radius:3px;"></span>Asleep</span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:var(--muted);"><span style="display:inline-block;width:14px;height:6px;background:rgba(179,197,255,0.1);border-radius:3px;border:1px solid rgba(179,197,255,0.15)"></span>Awake</span>
+    </div>
+    <div class="diary-grid">
+      <!-- Each column = one day, rows = time slots (each = 1hr, 24 blocks) -->
+      <!-- Sleep typically 3am–11am = blocks 9–17 of 24 -->
+      <div class="day-col">
+        <div class="day-name">Mon</div>
+        <!-- 18:00–03:00 awake = 9 blocks -->
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+        <!-- 03:00–11:00 asleep = 8 blocks -->
+        <div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div>
+        <!-- 11:00–18:00 awake = 7 blocks -->
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+      </div>
+      <div class="day-col">
+        <div class="day-name">Tue</div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+        <div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+      </div>
+      <div class="day-col">
+        <div class="day-name">Wed</div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+        <div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+      </div>
+      <div class="day-col">
+        <div class="day-name">Thu</div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+        <div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+      </div>
+      <div class="day-col">
+        <div class="day-name">Fri</div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+        <div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+      </div>
+      <div class="day-col">
+        <div class="day-name">Sat</div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+        <div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+      </div>
+      <div class="day-col">
+        <div class="day-name">Sun</div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+        <div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div><div class="time-block sleep-block"></div>
+        <div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div><div class="time-block wake-block"></div>
+      </div>
+    </div>
+    <p style="font-size:0.8rem;color:var(--muted);margin-top:1rem;">Notice how the sleep time gets later on free days (Sat/Sun), then gets cut short on school or work days. This pattern is a key sign of DSPS. Keep your own 2-week diary and bring it to your sleep appointment.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Tips -->
+<section id="tips">
+  <p class="section-label">Day-to-day help</p>
+  <h2>Simple tips for daily life</h2>
+  <div class="tips-grid">
+    <div class="tip-card featured">
+      <span class="tip-badge">Most important</span>
+      <h3>Wake up at the same time every day — even weekends</h3>
+      <p>The biggest mistake people with DSPS make is sleeping in on weekends to "catch up." This erases all the progress you made during the week and you have to start over. Waking up at the same time every single day — even when you're tired — is the most powerful thing you can do. Your wake time is what moves your clock forward.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-badge">Morning</span>
+      <h3>Get bright light right after waking</h3>
+      <p>Open the curtains, go outside, or use a light box within a few minutes of waking up. Even cloudy-day sunlight sends a strong signal to your brain. Waiting too long makes it less helpful.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-badge">Evening</span>
+      <h3>Dim the lights after 8 pm</h3>
+      <p>Use dim, warm lighting at night. Turn on Night Shift or f.lux on your phone or computer. Wear blue-light glasses 2–4 hours before bed to help your body make melatonin on the new schedule.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-badge">Bedtime</span>
+      <h3>Only go to bed when you actually feel sleepy</h3>
+      <p>Don't try to rush it. If you usually fall asleep at 2 AM, don't jump straight to a 10 PM bedtime. Move it slowly, 15–30 minutes at a time, so your body can keep up.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-badge">Bedroom</span>
+      <h3>Keep your bed just for sleeping</h3>
+      <p>No phones, homework, or food in bed. This helps your brain learn that bed means sleep. If you're still awake after 20 minutes, get up and do something calm until you feel sleepy.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-badge">School &amp; work</span>
+      <h3>Ask for a later start time</h3>
+      <p>DSPS is a real medical condition. A note from your doctor can help you ask for a later school start time, flexible work hours, or working from home while you work on your schedule.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FAQ -->
+<section id="faq">
+  <p class="section-label">Common questions</p>
+  <h2>Questions people often ask</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Is DSPS the same as just being a "night owl"?</div>
+      <div class="faq-a">Not exactly. Some people just prefer to stay up a little later — doctors call this having a <strong>late chronotype</strong>, which is a natural variation. DSPS is different because it's a medical <strong>circadian rhythm disorder</strong> that causes real problems at school, work, and in daily life. People with DSPS can't simply decide to fall asleep earlier the way a night owl can push through.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can DSPS be fully cured?</div>
+      <div class="faq-a">For most people, DSPS is a <strong>chronic</strong> (long-lasting) condition, since it's connected to your genetics and how your circadian rhythm is built. But it can get much better with the right plan. Some people get their sleep schedule close to normal. Others do best by working with a schedule that fits their biology — like remote work or later school start times.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do doctors find out if someone has DSPS?</div>
+      <div class="faq-a">A sleep doctor will review your history and a 2-week <strong>sleep diary</strong> you keep at home. They may also use <strong>actigraphy</strong> — a small wrist device (like a fitness tracker) that records when you're asleep and awake. Some doctors also measure your <strong>DLMO</strong> (Dim Light Melatonin Onset) — a blood or saliva test that shows exactly when your internal clock is set. In some cases, a <strong>polysomnography</strong> (a full overnight sleep study) may be ordered to rule out other sleep disorders.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can DSPS cause depression or anxiety?</div>
+      <div class="faq-a">Yes. Long-term <strong>sleep deprivation</strong> (not getting enough sleep) from DSPS often leads to <strong>depression</strong> and <strong>anxiety</strong>. Research also shows some shared biology between DSPS and mood disorders. Getting more sleep often helps your mood too. If you struggle with both, tell your doctor — treating sleep can improve mental health, and treating mental health can improve sleep.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">My teen might have DSPS — what should I do?</div>
+      <div class="faq-a">During <strong>puberty</strong>, most teens naturally shift to a later <strong>chronotype</strong> — wanting to stay up and wake up later. But DSPS is more extreme. If your teen cannot fall asleep before 2–3 AM no matter what, and it's seriously affecting school, it's worth seeing a sleep specialist. Many schools also offer <strong>academic accommodations</strong> (like later testing times) for students with a medical note for a diagnosed sleep disorder.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does melatonin work for everyone with DSPS?</div>
+      <div class="faq-a">It helps many people, but only when taken at the right time. Standard <strong>dosing</strong> (taking it right at bedtime) is usually wrong for DSPS. A small dose (like 1 mg) taken 1–2 hours before your target bedtime — timed to your <strong>DLMO</strong> — works much better. Melatonin acts as a <strong>chronobiotic</strong> (a clock-resetter), not a sleeping pill. Talk to your doctor to find the best timing and amount for you.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Support -->
+<section id="support">
+  <p class="section-label">You're not alone</p>
+  <h2>Where to get help</h2>
+  <div class="support-grid">
+    <div class="support-card">
+      <span class="support-icon">🏥</span>
+      <h3>Sleep doctor</h3>
+      <p>A sleep doctor can test you for DSPS and build a plan just for you.</p>
+      <a class="support-link" href="https://sleepeducation.org/find-a-sleep-center/" target="_blank">Find a sleep center →</a>
+    </div>
+    <div class="support-card">
+      <span class="support-icon">📚</span>
+      <h3>Sleep Education (AASM)</h3>
+      <p>A trusted website with easy-to-read info about sleep disorders and how to treat them.</p>
+      <a class="support-link" href="https://sleepeducation.org" target="_blank">sleepeducation.org →</a>
+    </div>
+    <div class="support-card">
+      <span class="support-icon">💬</span>
+      <h3>Talk to others with DSPS</h3>
+      <p>There are online groups where people with DSPS share what has helped them. You're not the only one going through this.</p>
+      <a class="support-link" href="https://www.reddit.com/r/DSPS/" target="_blank">r/DSPS on Reddit →</a>
+    </div>
+    <div class="support-card">
+      <span class="support-icon">🔬</span>
+      <h3>Research studies</h3>
+      <p>Scientists are studying new ways to help people with DSPS. You may be able to join a study.</p>
+      <a class="support-link" href="https://clinicaltrials.gov/search?cond=Delayed+Sleep+Phase" target="_blank">ClinicalTrials.gov →</a>
+    </div>
+    <div class="support-card">
+      <span class="support-icon">⚖️</span>
+      <h3>Help at work</h3>
+      <p>DSPS may count as a disability. Your doctor can write a letter to help you get changes at work, like a later start time.</p>
+      <a class="support-link" href="https://askjan.org" target="_blank">AskJAN.org →</a>
+    </div>
+    <div class="support-card">
+      <span class="support-icon">🎓</span>
+      <h3>Help at school</h3>
+      <p>Students with a doctor's note for DSPS may be able to get later test times or other schedule changes at school.</p>
+      <a class="support-link" href="https://www.ahead.org" target="_blank">AHEAD resources →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>DSPS Sleep Resource Center — A sleep health guide for patients</p>
+  <p class="footer-disclaimer">This website is for learning only and is not medical advice. Always talk to a doctor or sleep specialist about your sleep problems. If you need help right away, please contact your healthcare provider.</p>
+</footer>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.treatment-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    q.parentElement.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
