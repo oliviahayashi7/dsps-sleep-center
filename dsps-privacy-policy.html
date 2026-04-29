@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — DSPS Sleep Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --night: #0d1117;
+  --deep: #161b27;
+  --card: #1e2535;
+  --border: rgba(148,163,220,0.12);
+  --moon: #b3c5ff;
+  --dawn: #f0c87a;
+  --teal: #5eead4;
+  --text: #f0f4ff;
+  --muted: #b0bfe8;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--night);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 8% 12%, rgba(179,197,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 7%, rgba(179,197,255,0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 78% 10%, rgba(179,197,255,0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 50%, rgba(179,197,255,0.4) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  background: rgba(13,17,23,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 0 2rem;
+}
+.nav-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--moon);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.moon-icon {
+  width: 18px; height: 18px;
+  background: var(--dawn);
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+.moon-icon::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 4px;
+  width: 14px; height: 14px;
+  background: var(--night);
+  border-radius: 50%;
+}
+.nav-back {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--moon); }
+
+.page-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: rgba(179,197,255,0.08);
+  border: 1px solid rgba(179,197,255,0.18);
+  color: var(--moon);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 100px;
+  margin-bottom: 1.25rem;
+}
+
+h1 {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.last-updated {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+h2 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text);
+  margin: 2rem 0 0.75rem;
+}
+
+p {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  margin-bottom: 0.75rem;
+}
+
+a { color: var(--teal); }
+a:hover { color: var(--moon); }
+
+ul {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.info-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.1rem 1.4rem;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+}
+footer p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
+footer a { color: var(--muted); font-size: 0.8rem; }
+footer a:hover { color: var(--moon); }
+.footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <span class="moon-icon"></span>
+      DSPS Sleep Center
+    </a>
+    <a class="nav-back" href="index.html">← Back to main guide</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <span class="hero-tag">Legal</span>
+  <h1>Privacy Policy</h1>
+  <p class="last-updated">Last updated: April 2026</p>
+
+  <div class="info-box">
+    This website, DSPS Sleep Center, is a free patient education resource about Delayed Sleep Phase Syndrome (DSPS). We are committed to being transparent about how this site works and what data, if any, is collected when you visit.
+  </div>
+
+  <h2>Who we are</h2>
+  <p>DSPS Sleep Center is a free, non-commercial patient education website. We do not sell products, collect payment information, or require you to create an account.</p>
+
+  <h2>What information is collected</h2>
+  <p>We do not collect any personal information directly — you do not need to provide your name, email, or any other details to use this site.</p>
+  <p>However, this site uses <strong style="color:var(--text)">Google Analytics</strong> to understand how visitors use the site. Google Analytics automatically collects:</p>
+  <ul>
+    <li>Pages you visit and how long you spend on them</li>
+    <li>The general region or country you are visiting from</li>
+    <li>What type of device and browser you are using</li>
+    <li>How you arrived at the site (e.g. a search engine or direct link)</li>
+  </ul>
+  <p>This information is <strong style="color:var(--text)">anonymous</strong> — we cannot identify you personally from this data. It is used only to understand how the site is being used so we can improve it.</p>
+
+  <h2>Cookies</h2>
+  <p>Google Analytics uses cookies — small text files stored on your device — to track visits. These cookies do not contain personal information and are used only for analytics purposes.</p>
+  <p>You can opt out of Google Analytics tracking at any time by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-out Browser Add-on</a>.</p>
+
+  <h2>How Google uses this data</h2>
+  <p>Google may use the data collected through Google Analytics for its own purposes in accordance with Google's privacy policy. To learn more about how Google collects and processes data, visit: <a href="https://www.google.com/policies/privacy/partners/" target="_blank">How Google uses information from sites that use our services</a>.</p>
+
+  <h2>Third-party links</h2>
+  <p>This site contains links to external websites such as the American Academy of Sleep Medicine, Reddit, ClinicalTrials.gov, and others. We are not responsible for the privacy practices of those sites and encourage you to review their own privacy policies.</p>
+
+  <h2>Children's privacy</h2>
+  <p>This site is intended for general audiences including teenagers and their families. We do not knowingly collect any personal information from anyone, including children under 13.</p>
+
+  <h2>Medical disclaimer</h2>
+  <p>The content on this site is for educational purposes only and does not constitute medical advice. Always consult a qualified healthcare provider for diagnosis and treatment of any sleep disorder.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated date at the top.</p>
+
+  <h2>Contact</h2>
+  <p>If you have any questions about this Privacy Policy, please reach out through the contact information listed on the main page.</p>
+
+</div>
+
+<footer>
+  <p>DSPS Sleep Resource Center — A sleep health guide for patients</p>
+  <p class="footer-disclaimer" style="font-size:0.75rem;color:rgba(176,191,232,0.5);">This website is for learning only and is not medical advice. Always talk to a doctor or sleep specialist about your sleep problems.</p>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="dsps-treatment-guide.html">Treatment Guide</a>
+    <a href="dsps-testimonials.html">Patient Stories</a>
+    <a href="dsps-privacy-policy.html">Privacy Policy</a>
+  </div>
+</footer>
+
+</body>
+</html>
